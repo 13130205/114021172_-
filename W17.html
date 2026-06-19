@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .home
+        {
+            height: 100vh;  /* 一整個畫面高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+
+            padding-top: 50px;
+        }
+
+        .home h1
+        {
+            font-size: 36px;
+        }
+
+        .home p
+        {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .section
+        {
+            display: none;
+        }
+        #profile
+        {
+            padding-top: 70px;
+        }
+        #photo
+        {
+            padding-top: 80px;
+        }
+        .box
+        {
+            width: 200px;
+            height: 200px;
+            margin-top: 200px;
+            margin-left: 20px;
+        }
+        .h3
+        {
+            white-space: nowrap; 
+        }
+        .asia
+        {
+            text-decoration: none;
+            color:blue;
+            transition: 0.3s;
+        }
+        .asia:hover
+        {
+            text-shadow: 3px 3px 5px gray;
+        }
+        .menu-btn
+        {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .menu
+        {
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 10px;
+            width: 200px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+        .menu a
+        {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+        .menu a:hover
+        {
+            background-color: #ddd;
+        }
+        .slider
+        {
+            width: 500px;
+            height: 300px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .track
+        {
+            display: flex;
+            transition: transform 0.6s ease;
+            width: 100%;
+        }
+
+        .track img
+        {
+            width: 500px;
+            height: 300px;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="home" class="section home" style="display:block;">
+        <h1>歡迎來到我的個人網站</h1>
+        <p>
+            這是我的個人網站!<br>
+            可以透過左上角選單查看我的個人資料與圖片。<br>
+            點選亞洲大學就可以直接到亞洲大學的網站了
+        </p>
+    </div>
+
+
+
+    <div class="menu-btn" onclick="showMenu()">
+        &#9776;
+    </div>
+
+    <div class="menu" id="menu">
+        <a href="#" onclick="showSection('home')">首頁</a>
+        <a href="#" onclick="showSection('profile')">個人資料</a>
+        <a href="#" onclick="showSection('photo')">圖片</a>
+    </div>
+
+
+
+
+
+    <div  id="profile" class="section">
+    <h1>鄭雅羽</h1>
+    <h2>114021172</h2>
+
+    <h3 class="h3">
+        就讀學校：
+        <a href="http://www.asia.edu.tw/" target="_blank" class="asia">
+            亞洲大學
+        </a>
+        
+        <br>
+
+        <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/4/40/Taiwan_Asia_University_Emblem.svg/1280px-Taiwan_Asia_University_Emblem.svg.png" width="250" style="margin-top: 30px">
+    </h3>
+</div>
+
+    <div id="photo"class="section">
+
+        <h1>圖片</h1>
+
+        <div class="slider">
+            <div class="track" id="track">
+            <img src="https://picsum.photos/seed/picsum/200/300">
+            <img src="https://pic.616pic.com/bg_w1180/00/14/86/YCnYPJmxlf.jpg">
+            <img src="https://img.magnific.com/free-photo/fuji-mountain-kawaguchiko-lake-morning-autumn-seasons-fuji-mountain-yamanachi-japan_335224-102.jpg?semt=ais_hybrid&w=740&q=80">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr-ODrcogThvWvY4DHRpRGlOM4SCXEvi3Phg&s">
+            <img src="https://png.pngtree.com/thumb_back/fh260/background/20241010/pngtree-breathtaking-landscape-nature-s-stunning-beauty-scenic-vista-a-free-photo-image_16360602.jpg">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(id)
+        {
+            document.querySelectorAll(`.section`).forEach(el => 
+            {
+                el.style.display = `none`;
+            });
+            document.getElementById(id).style.display = 'block';
+            document.getElementById("menu").style.display = "none";
+        }
+
+        function showMenu()
+        {
+            let menu = document.getElementById("menu");
+
+            if (menu.style.display === "block")
+            {
+                menu.style.display = "none";
+            }
+            else
+            {
+                menu.style.display = "block";
+            }
+        }
+
+        let index = 0;
+        let track = document.getElementById("track");
+        let total = track.children.length;
+
+        const size = 500; // 直接固定（最穩）
+
+        let firstClone = track.children[0].cloneNode(true);
+        track.appendChild(firstClone);
+
+        setInterval(() => {
+
+        index++;
+
+        track.style.transition = "transform 0.6s ease";
+        track.style.transform = `translateX(-${index * size}px)`;
+
+        // 如果滑到「複製的第一張」
+        if (index === total) {
+
+            setTimeout(() => {
+
+                // 取消動畫 → 瞬間跳回真正第一張
+                track.style.transition = "none";
+                index = 0;
+                track.style.transform = `translateX(0)`;
+
+            }, 600);
+        }
+
+    }, 3000);
+        
+
+    </script>
+</body>
+</html>
